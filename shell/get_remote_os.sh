@@ -14,29 +14,29 @@ get_remote_os() {
 		OUT=$( nmap -O $IP | grep "OS details" | cut -d ':' -f2 )
 		echo "Scan complete - $OUT is running on $IP" 
 		echo "$IP --- $OUT" >> scan_out
-	done	
+	done
 }
 
 usage_info() {
 	echo "$0 checks and returns the name of the Operating System running on a remote host."
 	echo "Useage: sudo $0 <IP_ADDR1> <IP_ADDR2> ... "
-	echo "Example: sudo ./get_remote_os 192.168.1.1"
+	echo "Example: sudo $0 192.168.1.1"
 }
 
 check_requirements() {
 	if [[ $EUID -ne 0 ]];then
-		echo "You have to run this script using sudo or as the root user. See:"
+		echo "You have to run this script using sudo or as the root user. See usage:"
 		usage_info
 		exit 1
 	fi
 
- 	if [[ $# -le 0 ]];then
+ 	if [[ $# -eq 0 ]];then
                 usage_info
                 exit 1
         fi
 
 	if [[ ! -f `which nmap` ]];then
-		echo -e "nmap was not found on this computer. This script requires nmap to function.\n 
+		echo -e "nmap was not found on this computer. This script requires nmap, to function.\n 
 		Please install nmap using your distros package manager.\nExample:\n\t$ sudo apt-get 
 		install nmap # on ubuntu and debian systems.\n\t$ sudo yum install nmap # on Centos 
 		and Redhat systems."
